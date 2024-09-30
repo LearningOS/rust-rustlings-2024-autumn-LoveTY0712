@@ -11,4 +11,7 @@ fn main() {
     } else {
         println!("x is not ten!");
     }
+    if x>5 {
+        println!("Hi");
+    }
 }

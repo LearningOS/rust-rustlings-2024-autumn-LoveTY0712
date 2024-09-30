@@ -9,4 +9,6 @@
 fn main() {
     let x = 5;
     println!("x has the value {}", x);
+    let str="Hello";
+    println!("Say {}",str);
 }

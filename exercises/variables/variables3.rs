@@ -5,6 +5,7 @@
 
 
 fn main() {
-    let x: i32 = 10;
-    println!("Number {}", x);
+    let x: i64=10 ;
+    let s: &str="Hello!";
+    println!("Number {x},{s}");
 }
