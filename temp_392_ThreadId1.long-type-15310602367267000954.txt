@@ -1,0 +1,1 @@
+FlatMap<std::slice::Iter<'_, std::collections::HashMap<String, Progress>>, std::collections::hash_map::Values<'_, String, Progress>, for<'a> fn(&'a std::collections::HashMap<String, Progress>) -> std::collections::hash_map::Values<'a, String, Progress> {std::collections::HashMap::<String, Progress>::values}>

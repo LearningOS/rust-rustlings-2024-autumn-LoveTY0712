@@ -2,7 +2,7 @@
 	heap
 	This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
+// DONE
 
 use std::cmp::Ord;
 use std::default::Default;
@@ -37,7 +37,20 @@ where
     }
 
     pub fn add(&mut self, value: T) {
-        //TODO
+        self.items.push(value);
+        self.count += 1;
+        self.bubble_up(self.count);
+    }
+    fn bubble_up(&mut self, mut idx: usize) {
+        while idx > 1 {
+            let parent_idx = self.parent_idx(idx); // 提前计算 parent_idx
+            if (self.comparator)(&self.items[idx], &self.items[parent_idx]) {
+                self.items.swap(idx, parent_idx);
+                idx = parent_idx;
+            } else {
+                break; // 如果不需要交换，提前退出
+            }
+        }
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -56,9 +69,30 @@ where
         self.left_child_idx(idx) + 1
     }
 
-    fn smallest_child_idx(&self, idx: usize) -> usize {
-        //TODO
-		0
+    fn smallest_child_idx(&self, idx: usize) -> Option<usize> {
+        let left = self.left_child_idx(idx);
+        let right = self.right_child_idx(idx);
+        if left > self.count {
+            return None;
+        }
+        if right > self.count {
+            return Some(left);
+        }
+        if (self.comparator)(&self.items[left], &self.items[right]) {
+            Some(left)
+        } else {
+            Some(right)
+        }
+    }
+    fn bubble_down(&mut self, mut idx: usize) {
+        while let Some(smallest_child) = self.smallest_child_idx(idx) {
+            if (self.comparator)(&self.items[smallest_child], &self.items[idx]) {
+                self.items.swap(idx, smallest_child);
+                idx = smallest_child;
+            } else {
+                break;
+            }
+        }
     }
 }
 
@@ -84,9 +118,18 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        //TODO
-		None
+        if self.is_empty() {
+            return None;
+        }
+        self.items.swap(1, self.count); // 将根节点与最后一个节点交换
+        let result = self.items.pop(); // 弹出最后一个节点（之前的根节点）
+        self.count -= 1;
+        if self.count > 0 {
+            self.bubble_down(1); // 从根节点开始下沉
+        }
+        result
     }
+    
 }
 
 pub struct MinHeap;
